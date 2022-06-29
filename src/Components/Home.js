@@ -40,7 +40,7 @@ const Content = styled.div`
 `
 
 const Header = styled.div`
-    width: 326px;
+    width: 50%;
     height: 32px;
     margin-bottom: 22px;
     display: flex;
@@ -55,7 +55,7 @@ const Header = styled.div`
 `
 
 const Container = styled.div`
-    width: 326px;
+    width: 50%;
     height: 446px;
     background-color: #FFFFFF;
     border-radius: 5px;
@@ -63,7 +63,7 @@ const Container = styled.div`
 `
 
 const Footer = styled.div`
-    width: 326px;
+    width: 50%;
     justify-content: space-between;
     display: flex;
 `

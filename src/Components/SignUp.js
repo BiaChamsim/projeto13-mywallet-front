@@ -20,6 +20,8 @@ export default function SignUp(){
 const Content = styled.div`
     width: 100%;
     height: 100vh;
+    padding-left: 25px;
+    padding-right: 25px;
     background-color: #8B11BE;
     display: flex;
     flex-direction: column;
@@ -36,7 +38,7 @@ const Content = styled.div`
 `
 
 const Input = styled.input`
-    width: 326px;
+    width: 100%;
     height: 58px ;
     border-radius: 5px;
     border:none;
@@ -51,7 +53,7 @@ const Input = styled.input`
 `
 
 const Button = styled.button`
-    width: 326px;
+    width: 100%;
     height: 46px ;
     border-radius: 5px;
     border:none;
