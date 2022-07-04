@@ -61,8 +61,13 @@ export default function Home(){
                 <div>
                     {balance.map((balance) => {
                         return(
-                        <Balance status={balance.type}><span>{balance.date} {balance.description}</span> <span>{balance.value}</span> </Balance>)               
-                    })}
+                        <Balance status={balance.type}>
+                            <span>
+                                <span style={{color: "#C6C6C6" }}>{balance.date}</span> 
+                                <span style={{color: "#000000", margin: "10"}}>{balance.description}</span>
+                            </span>
+                            <span>{balance.value}</span> </Balance>
+                            )                    })}
                 </div>
                 <TotalBalance totalValue={total}>
                     {balance.length === 0 ? "" : <><span style={{fontWeight: "bold"}}>SALDO</span><span>{total}</span></>} 
@@ -142,6 +147,7 @@ const Container = styled.div`
     display: flex;
     flex-direction: column; 
     justify-content: space-between;
+    padding: 10px;
 
 `
 
