@@ -24,7 +24,7 @@ export default function Home(){
             }
         }
         console.log(token)
-        const promise = axios.get('http://localhost:5000/balance', config)
+        const promise = axios.get('https://mywallet31.herokuapp.com/balance', config)
         promise.then((response) =>{
             setBalance(response.data)
             console.log(response.data)
