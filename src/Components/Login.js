@@ -1,17 +1,44 @@
 import styled from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useState, useContext } from "react";
+import axios from "axios";
+
+import TokenContext from '../Contexts/TokenContext.js';
+import NameContext from '../Contexts/NameContext.js';
 
 
 export default function Login(){
 
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const {setToken} = useContext(TokenContext);
+    const {setName} = useContext(NameContext);
+    
+    const navigate = useNavigate();
 
+    function enter(){
+        console.log("ola")
+        const body = {email, password}
+
+        const promise = axios.post('http://localhost:5000/login', body)
+        promise.then(response => {
+            setToken(response.data.token)
+            setName(response.data.userName)
+            navigate('/home')
+        })
+        promise.catch(error =>{
+            console.log(error) 
+            alert("Usuário ou senha incorretos")
+        })                      
+        
+    }
 
     return(
         <Content>
             <h1>MyWallet</h1>
-            <Input placeholder="E-mail"></Input>
-            <Input placeholder="Senha"></Input>
-            <Button>Entrar</Button>
+            <Input placeholder="E-mail" type="email" value={email} onChange={(e) => setEmail(e.target.value)} required></Input>
+            <Input placeholder="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required></Input>
+            <Button onClick={enter}>Entrar</Button>
             <Link to="/cadastro">Não tem uma conta? Cadastre-se!</Link>
         </Content>
 
@@ -35,6 +62,12 @@ const Content = styled.div`
         font-weight: 400;
         font-family: 'Saira Stencil One', cursive;
         color: #FFFFFF;
+    }
+
+    a{
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: bold;
     }
 `
 

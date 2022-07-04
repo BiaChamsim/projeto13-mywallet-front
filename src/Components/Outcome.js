@@ -1,15 +1,48 @@
 import styled from "styled-components";
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router";
+
+import TokenContext from '../Contexts/TokenContext.js';
 
 export default function Outcome(){
+
+    const [value, setValue] = useState("");
+    const [description, setDescription] = useState("");
+    const {token, setToken} = useContext(TokenContext);
+
+    const navigate = useNavigate(); 
+
+    function postOutcome(){
+        const body = {
+            value: value,
+            description: description
+        }
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const promise = axios.post('http://localhost:5000/outcome', body, config)
+        promise.then( response => {
+            navigate("/home")
+            console.log(promise)
+        })
+        promise.catch(error => {
+            console.log(error)
+        })
+    }
+
     return(
         <Content>
             <Header>
-                <h1>Nova saída</h1>
+                <h2>Nova saída</h2>
             </Header>
             <Container>
-                <Input placeholder="Valor"></Input>
-                <Input placeholder="Descrição"></Input>
-                <Button>Salvar entrada</Button>
+                <Input placeholder="Valor" type="number" value={value} onChange={(e) => setValue(e.target.value)}></Input>
+                <Input placeholder="Descrição" type="text" value={description} onChange={(e) => setDescription(e.target.value)}></Input>
+                <Button onClick={postOutcome}>Salvar saída</Button>
             </Container>
         </Content>
     )

@@ -1,23 +1,50 @@
-import styled from "styled-components"
-import { Link } from "react-router-dom";
+import styled from "styled-components";
+import { Link, useNavigate } from "react-router-dom";
+import { useState } from "react";
+import axios from "axios";
 
 export default function SignUp(){
+    const [name, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmation, setConfirmation] = useState("");
+
+    const navigate = useNavigate();
+
+
+    function register(e){
+
+        e.preventDefault()
+
+        const body = {name, email, password, confirmation}
+
+        console.log(body)
+
+        const promise = axios.post('http://localhost:5000/signup', body)
+        promise.then(response => {
+            navigate("/")
+        })
+        promise.catch(error => {
+            console.log(error)
+            alert("Usuário ou senha ja cadastrados.")
+
+        })
+    }
     return(
-        <Content>
+        <Content onSubmit={register}>
             <h1>MyWallet</h1>
-            <Input placeholder="Nome"></Input>
-            <Input placeholder="E-mail"></Input>
-            <Input placeholder="Senha"></Input>
-            <Input placeholder="Confirme a senha"></Input>
-            <Button>Cadastrar</Button>
-            <Link to="/">Já tem uma conta? Entre agora!</Link>
-            
+            <Input placeholder="Nome"  type="text" value={name} onChange={(e) => setName(e.target.value)} required></Input>
+            <Input placeholder="E-mail"  type="email" value={email} onChange={(e) => setEmail(e.target.value)} required></Input>
+            <Input placeholder="Senha" type="password" value={password} onChange={(e) => setPassword(e.target.value)} required></Input>
+            <Input placeholder="Confirme a senha" type="password" value={confirmation} onChange={(e) => setConfirmation(e.target.value)} required></Input>
+            <Button type="submit">Cadastrar</Button>
+            <Link to="/">Já tem uma conta? Entre agora!</Link>          
 
         </Content>
     )
 }
 
-const Content = styled.div`
+const Content = styled.form`
     width: 100%;
     height: 100vh;
     padding-left: 25px;
@@ -34,6 +61,12 @@ const Content = styled.div`
         font-weight: 400;
         font-family: 'Saira Stencil One', cursive;
         color: #FFFFFF;
+    }
+
+    a{
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: bold;
     }
 `
 

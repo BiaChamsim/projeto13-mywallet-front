@@ -1,15 +1,48 @@
 import styled from "styled-components";
+import { useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from "react-router";
+
+import TokenContext from '../Contexts/TokenContext.js';
 
 export default function Income(){
+
+    const [value, setValue] = useState("");
+    const [description, setDescription] = useState("");
+    const {token, setToken} = useContext(TokenContext);
+
+    const navigate = useNavigate(); 
+
+    function postIncome(){
+        const body = {
+            value: value,
+            description: description
+        }
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        }
+
+        const promise = axios.post('http://localhost:5000/income', body, config)
+        promise.then( response => {
+            navigate("/home")
+            console.log(promise)
+        })
+        promise.catch(error => {
+            console.log(error)
+        })
+    }
+
     return(
         <Content>
             <Header>
-                <h1>Nova entrada</h1>
+                <h2>Nova entrada</h2>
             </Header>
             <Container>
-                <Input placeholder="Valor"></Input>
-                <Input placeholder="Descrição"></Input>
-                <Button>Salvar entrada</Button>
+                <Input placeholder="Valor" type="number" value={value} onChange={(e) => setValue(e.target.value)}></Input>
+                <Input placeholder="Descrição" type="text" value={description} onChange={(e) => setDescription(e.target.value)}></Input>
+                <Button onClick={postIncome}>Salvar entrada</Button>
             </Container>
         </Content>
     )
