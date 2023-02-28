@@ -20,7 +20,7 @@ export default function Login(){
         console.log("ola")
         const body = {email, password}
 
-        const promise = axios.post('https://mywallet31.herokuapp.com/login', body)
+        const promise = axios.post('https://mywallet-fbe0.onrender.com/login', body)
         promise.then(response => {
             setToken(response.data.token)
             setName(response.data.userName)

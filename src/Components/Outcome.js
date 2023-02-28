@@ -24,7 +24,7 @@ export default function Outcome(){
             }
         }
 
-        const promise = axios.post('https://mywallet31.herokuapp.com/outcome', body, config)
+        const promise = axios.post('https://mywallet-fbe0.onrender.com/outcome', body, config)
         promise.then( response => {
             navigate("/home")
             console.log(promise)
